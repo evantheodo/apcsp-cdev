@@ -26,7 +26,16 @@ int main(int argc, char* argv[])
 {
   // the two variables which control the number of times areaOfCircle is called
   // in this case 5.2, 6.2, 7.2
-  float start = 5.2;
+  char input[256];
+  float start;
+  printf("enter a value for the radius: ");
+  while (1)
+  {
+    fgets(input, 256, stdin);
+    if (sscanf(input, "%f", &start)) break;
+    printf("Invalid number try again: ");
+  }
+
   int reps = 3;
   
   // for testing only - do not change

@@ -80,7 +80,7 @@ int main()
 	while (1)
 	{
 		fgets(input, 256, stdin);
-		if (sscanf(input, "%i", &students[numStudents].age) == 1) break;
+		if (sscanf(input, "%d", &students[numStudents].age) == 1) break;
 		printf("Not a valid ID - try again!\n");
 	}
 	numStudents++;
