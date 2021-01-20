@@ -85,8 +85,9 @@ void saveStudents(int key)
       sprintf(buff, "%s %s %d %ld \n", students[i]->firstName, students[i]->lastName, students[i]->age, students[i]->id);
       
       //encryption!!
+      caesarEncrypt(buff, key);
 
-      fprintf(fp, "%s", buff);
+      fprintf(fp, "%s\n", buff);
       }
     fclose(fp);
   }
@@ -98,19 +99,20 @@ void loadStudents(int key)
   // load the students from the data file overwriting all exisiting students in memory
   deleteStudents();
   FILE* fp;
-  printf("nice");
   fp = fopen("studentdata.txt", "r");
   if (fp)
   {
     while (1)
     {
       //char fname[25], lname[25];
+      char buff[256];
       char *fname, *lname;
       int age;
       long id;
-      printf("in while loop");
+      fscanf(fp, "%s\n", buff);
+      caesarDecrypt(buff, key);
       //below, I use %ms to allocate the right amt of memory
-      if (fscanf(fp, "%ms %ms %d %ld \n", &fname, &lname, &age, &id) == 4) //# of things that match
+      if (sscanf(buff, "%ms %ms %d %ld \n", &fname, &lname, &age, &id) == 4) //# of things that match
       {
 	createStudent(fname, lname, age, id);
 	free(fname);
@@ -118,7 +120,6 @@ void loadStudents(int key)
       }
       else
       {
-	printf("nooooo you didnt just majke it");
 	printf("No more students in your save file!\n");
 	printf("Loaded %d students.\n", numStudents);
 	break;
