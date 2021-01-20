@@ -47,6 +47,7 @@ int main()
     }
     else if (c == 'l')
     {
+      printf("NICE");
       loadStudents(key);
       continue;
     }

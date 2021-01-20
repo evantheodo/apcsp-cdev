@@ -21,6 +21,7 @@ Student* students[100] = {0};
 //input var
 char input[256];
 
+
 //----------------------------------Functions--------------------------------
 
 void createStudent(char* fname, char* lname, int age, int id)
@@ -62,6 +63,7 @@ void deleteStudents()
     deleteStudent(students[i]);
     students[i] = 0;
   }
+  numStudents = 0;
 }
 
 
@@ -83,9 +85,6 @@ void saveStudents(int key)
       sprintf(buff, "%s %s %d %ld \n", students[i]->firstName, students[i]->lastName, students[i]->age, students[i]->id);
       
       //encryption!!
-      // printf("Enter an encryption number: ");
-      //key = fgets(input, 256, stdin);
-      //encrypt(
 
       fprintf(fp, "%s", buff);
       }
@@ -97,23 +96,29 @@ void saveStudents(int key)
 void loadStudents(int key)
 {
   // load the students from the data file overwriting all exisiting students in memory
+  deleteStudents();
   FILE* fp;
-
-  fp = fopen("filename.txt", "r");
+  printf("nice");
+  fp = fopen("studentdata.txt", "r");
   if (fp)
   {
     while (1)
     {
+      //char fname[25], lname[25];
       char *fname, *lname;
       int age;
       long id;
-      
-      if (fscanf(fp, "%s %s %d %ld \n", fname, lname, &age, &id) == 4) //# of things that match
+      printf("in while loop");
+      //below, I use %ms to allocate the right amt of memory
+      if (fscanf(fp, "%ms %ms %d %ld \n", &fname, &lname, &age, &id) == 4) //# of things that match
       {
 	createStudent(fname, lname, age, id);
+	free(fname);
+	free(lname);
       }
       else
       {
+	printf("nooooo you didnt just majke it");
 	printf("No more students in your save file!\n");
 	printf("Loaded %d students.\n", numStudents);
 	break;
