@@ -21,7 +21,13 @@ Student* students[100] = {0};
 //input var
 char input[256];
 
-//----------------------------------Functions--------------------------------
+//Student structure. I think this goes here?
+typedef struct {
+  char fname[];
+  char lname[];
+  int age;
+  int id;
+} Student;
 
 void createStudent(char* fname, char* lname, int age, int id)
 {
@@ -30,26 +36,42 @@ void createStudent(char* fname, char* lname, int age, int id)
   // student to the student array
   //  - the firstName and lastName strings should be dynamically created
   //    based on the size of the fname and lname args
-  Student* st = (Student*)malloc(sizeof(Student));
-  st->firstName = malloc(strlen(fname));
-  st->lastName = malloc(strlen(lname));
-  strcpy(st->firstName, fname);
-  strcpy(st->lastName, lname);
-  st->age = age;
-  st->id = id;
-  students[numStudents] = st;
-  numStudents++;
+  printf("First Name: ");
+  fgets(input, 256, stdin);
+  printf("%c", input); //test
+  malloc(&student[numStudents].fname, *sizeof(input));
+  sscanf(input, "%s", &student[numStudents].fname);
 
+  printf("Last Name: ");
+  fgets(input, 256, stdin);
+  malloc(&student[numStudents].lname, *sizeof(input));
+  sscanf(input, "%s", &student[numStudents].fname);
+
+  printf("Age: ");
+  while (1)
+  {
+    fgets(input, 256, stdin);
+    malloc(&student[numStudents].age, *sizeof(input));
+    sscanf(input, "%d", &student[numStudents].age);
+  }
+
+  printf("Student ID: ");
+  while (1)
+  {
+    fgets(input, 256, stdin);
+    malloc(&student[numStudents].age, *sizeof(input));
+    sscanf(input, "%d", &student[numStudents].age);
+  }
 }
 
 
 void deleteStudent(Student* student)
 {
   // free the memory associated with a student including the strings
-  free(student->firstName);
-  free(student->lastName);
-  free(student);
-  //this is actually supposed to be three lines long. fname, lname, set the pointer to 0.
+  free(&student->fname);
+  free(&student->lname);
+  free(&student->age);
+  free(&student->studentid);
 }
 
 
@@ -60,7 +82,7 @@ void deleteStudents()
   for (int i=0; i<numStudents; i++)
   {
     deleteStudent(students[i]);
-    students[i] = 0;
+    printf("All students have been deleted.\n");
   }
 }
 
@@ -74,21 +96,12 @@ void saveStudents(int key)
   //       james dean 21 2345 
   //       katy jones 18 4532 
   FILE* fp;
-  char buff[256];
 
   fp = fopen("studentdata.txt", "w");
   if (fp)
   {
-    for (int i=0; i<numStudents; i++){
-      sprintf(buff, "%s %s %d %ld \n", students[i]->firstName, students[i]->lastName, students[i]->age, students[i]->id);
-      
-      //encryption!!
-      // printf("Enter an encryption number: ");
-      //key = fgets(input, 256, stdin);
-      //encrypt(
-
-      fprintf(fp, "%s", buff);
-      }
+    for (int i=0;; i<numStudents; i++)
+      fprintf(fp, "%s %s %d %d \n", &student[i].fname, &student[i].lname, &student[i].age, &student[i].studentid);
     fclose(fp);
   }
 }
@@ -104,22 +117,29 @@ void loadStudents(int key)
   {
     while (1)
     {
-      char *fname, *lname;
-      int age;
-      long id;
-      
-      if (fscanf(fp, "%s %s %d %ld \n", fname, lname, &age, &id) == 4) //# of things that match
+      int lineCount = 0; //number of lines in the file
+      char c; //stores character read from file
+      for (c = getc(fp); c != EOF; c = getc(fp))
+	f (c == "\n")
+	  lineCount += 1;
+
+      char* fname[], lname[];
+      int age, studentid;
+
+      for(int i=0; i<lineCount; i++)
+      if (fscanf(fp, "%s %s %d %d ", &fname, &lname, &age; &studentid) == 4) //# of things that match
       {
-	createStudent(fname, lname, age, id);
+	strcpy(student[numStudents].fname, *fname;
+	strcpy(student[numStudents].lname, *lname;
+	student[numStudents].age = age;
+	student[numStudents.studentid = studentid;
+	printf("loaded %i students", i);
       }
       else
-      {
 	printf("No more students in your save file!\n");
-	printf("Loaded %d students.\n", numStudents);
 	break;
-      }
+      numStudents++;
     }
-  }
 }
 
 
