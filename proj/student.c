@@ -111,22 +111,18 @@ void loadStudents(int key)
       long id;
       fgets(buff, 256, fp);
       //fscanf(fp, "%s", buff);
-      printf(buff);
       if (key != 0){
         caesarDecrypt(buff, key);
       }
-      printf(buff);
       //below, I use %ms to allocate the right amt of memory
       if (sscanf(buff, "%ms %ms %d %ld \n", &fname, &lname, &age, &id) == 4) //# of things that match
       {
 	createStudent(fname, lname, age, id);
-	printf("student created.");
 	free(fname);
 	free(lname);
       }
       else
       {
-	printf("No more students in your save file!\n");
 	printf("Loaded %d students.\n", numStudents);
 	break;
       }
