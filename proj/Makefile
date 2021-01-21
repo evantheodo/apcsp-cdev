@@ -10,7 +10,7 @@ default: $(TARGET)
 all: default
 
 HEADERS = encrypt.h
-OBJECTS = studentmain.o student.o
+OBJECTS = studentmain.o student.o encrypt/encrypt.o
 
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
