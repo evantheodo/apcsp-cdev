@@ -87,7 +87,7 @@ void saveStudents(int key)
       //encryption!!
       caesarEncrypt(buff, key);
 
-      fprintf(fp, "%s\n", buff);
+      fprintf(fp, "%s \n", buff);
       }
     fclose(fp);
   }
@@ -104,13 +104,14 @@ void loadStudents(int key)
   {
     while (1)
     {
-      //char fname[25], lname[25];
       char buff[256];
       char *fname, *lname;
       int age;
       long id;
       fscanf(fp, "%s\n", buff);
-      caesarDecrypt(buff, key);
+      if (key != 0){
+        caesarDecrypt(buff, key);
+      }
       //below, I use %ms to allocate the right amt of memory
       if (sscanf(buff, "%ms %ms %d %ld \n", &fname, &lname, &age, &id) == 4) //# of things that match
       {
